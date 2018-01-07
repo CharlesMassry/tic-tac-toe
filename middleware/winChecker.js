@@ -33,7 +33,7 @@ const winChecker = ({ dispatch, getState }) => next => action => {
         if (winningPosition.isSubsetOf(new SuperSet(positions["X"]))) {
             xWins = true;
         }
-        if (winningPosition.isSubsetOf(new SuperSet(positions["0"]))) {
+        if (winningPosition.isSubsetOf(new SuperSet(positions["O"]))) {
             oWins = true;
         }
     });
