@@ -1,16 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Cell from "./Cell";
+import Board from "./Board";
 import { makeMove, reset } from "../actions";
 
 class TicTacToe extends React.Component {
-    handleClick = (index) => {
-        this.props.dispatch(makeMove(this.props.currentPlayer, index));
-    };
-
     handleResetClick = () => {
         this.props.dispatch(reset());
-    }
+    };
 
     render() {
         const resetButton = <button onClick={this.handleResetClick}>Reset</button>;
@@ -24,37 +20,16 @@ class TicTacToe extends React.Component {
 
         return <div>
             <h3>{this.props.currentPlayer}'s turn</h3>
-            {
-                chunkArray(this.props.board, 3).map( (row, rowIndex) => {
-                    return <div key={rowIndex}>
-                        {
-                            row.map( (mark, index) => {
-                                return <Cell mark={mark}
-                                             index={(rowIndex * 3) + index}
-                                             key={`${rowIndex}_${index}`}
-                                             onClick={this.handleClick} />;
-                            })
-                        }
-                    </div>
-                })
-            }
-
+            <Board onClick={this.handleClick} board={this.props.board}/>
             {resetButton}
         </div>;
     }
 }
 
-function chunkArray(array, part) {
-    let tmp = [];
-    for(let i = 0; i < array.length; i += part) {
-        tmp.push(array.slice(i, i + part));
-    }
-    return tmp;
-}
-
 function mapStateToProps(storeState, componentProps) {
     return {
-        ...storeState
+        winner: storeState.winner,
+        currentPlayer: storeState.currentPlayer
     };
 }
 
