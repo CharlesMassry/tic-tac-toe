@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers';
 import winChecker from "./middleware/winChecker";
+import actionLogger from "./middleware/actionLogger";
 
 let initialState = {
     board: [ '', '', '', '', '', '', '', '', ''],
@@ -16,5 +17,5 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== "undefined") {
     composeEnhancers = compose;
 }
 
-let store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(winChecker)));
+let store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(winChecker, actionLogger)));
 export default store
