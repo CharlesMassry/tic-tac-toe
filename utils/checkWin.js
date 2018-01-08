@@ -17,21 +17,15 @@ function checkWin(board) {
         return accumulator;
     }, { "X": (new SuperSet()), "O": (new SuperSet())});
 
-    let xWins = false;
-    let oWins = false;
-
-    winningPositions.forEach(winningPosition => {
+    return winningPositions.reduce( (winner, winningPosition) => {
         if (winningPosition.isSubsetOf(positions["X"])) {
-            xWins = true;
+            winner = "X";
+        } else if (winningPosition.isSubsetOf(positions["O"])) {
+            winner = "O";
         }
-        if (winningPosition.isSubsetOf(positions["O"])) {
-            oWins = true;
-        }
-    });
 
-    if (xWins) return "X";
-    if (oWins) return "O";
-    return null;
+        return winner;
+    } , "");
 }
 
 export default checkWin;
